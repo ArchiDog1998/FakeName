@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/ArchiDog1998/FakeName/compare/v1.0.0...v1.0.1) (2023-05-05)
+
+
+### Bug Fixes
+
+* for release. ([f129798](https://github.com/ArchiDog1998/FakeName/commit/f1297987a98f421d46b8efb60f0aee6991b03eb1))
+
 ## 1.0.0 (2023-05-05)
 
 

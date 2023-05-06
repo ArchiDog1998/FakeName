@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.2](https://github.com/ArchiDog1998/FakeName/compare/v1.0.1...v1.0.2) (2023-05-06)
+
+
+### Bug Fixes
+
+* add a free for changing name. ([a3ff792](https://github.com/ArchiDog1998/FakeName/commit/a3ff792e12eed43636fb686af47898220566411d))
+* simplify code. ([38d6ee3](https://github.com/ArchiDog1998/FakeName/commit/38d6ee35c91914b4dccbf6992c26e9010bfeeb25))
+* simplify it. ([5b613cc](https://github.com/ArchiDog1998/FakeName/commit/5b613ccb10010306e579ca995ae8efcb63af2b6e))
+
 ## [1.0.1](https://github.com/ArchiDog1998/FakeName/compare/v1.0.0...v1.0.1) (2023-05-05)
 
 

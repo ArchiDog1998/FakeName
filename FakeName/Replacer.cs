@@ -21,10 +21,17 @@ internal static class Replacer
             {
                 var bytes = str.Encode();
                 var pointer = Marshal.AllocHGlobal(bytes.Length + 1);
-                Marshal.Copy(bytes, 0, pointer, bytes.Length);
-                Marshal.WriteByte(pointer, bytes.Length, 0);
+                try
+                {
+                    Marshal.Copy(bytes, 0, pointer, bytes.Length);
+                    Marshal.WriteByte(pointer, bytes.Length, 0);
 
-                return pointer;
+                    return pointer;
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(pointer);
+                }
             }
             else
             {
@@ -40,11 +47,10 @@ internal static class Replacer
 
     private static SeString GetSeStringFromPtr(IntPtr seStringPtr)
     {
-        byte b;
         var offset = 0;
         unsafe
         {
-            while ((b = *(byte*)(seStringPtr + offset)) != 0)
+            while (*(byte*)(seStringPtr + offset) != 0)
                 offset++;
         }
         var bytes = new byte[offset];
@@ -113,15 +119,14 @@ internal static class Replacer
 
     private static bool ReplacePlayerName(this SeString text, string[] names, string replacement)
     {
-        var result = false;
         foreach (var name in names)
         {
             if(ReplacePlayerName(text, name, replacement))
             {
-                result = true;
+                return true;
             }
         }
-        return result;
+        return false;
     }
 
     private static bool ReplacePlayerName(this SeString text, string name, string replacement)
@@ -133,10 +138,12 @@ internal static class Replacer
         {
             if (payLoad is TextPayload load)
             {
+                if (string.IsNullOrEmpty(load.Text)) continue;
+
                 var t = load.Text.Replace(name, replacement);
                 if (t == load.Text) continue;
                 load.Text = t;
-                return true;
+                result = true;
             }
         }
         return result;

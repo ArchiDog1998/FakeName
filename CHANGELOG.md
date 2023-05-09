@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.0.3](https://github.com/ArchiDog1998/FakeName/compare/v1.0.2...v1.0.3) (2023-05-09)
+
+
+### Bug Fixes
+
+* changed the target of fake name. ([de76d67](https://github.com/ArchiDog1998/FakeName/commit/de76d6708118b1600162e687c128643576f03a7a))
+* changed the yaml file. ([3c646db](https://github.com/ArchiDog1998/FakeName/commit/3c646dbcc06e1771f4c94165846d30f512ba3561))
+* simplify the code. ([9bda8f3](https://github.com/ArchiDog1998/FakeName/commit/9bda8f3b276d60662e4bfe87cf38e6b11b838e01))
+
 ## [1.0.2](https://github.com/ArchiDog1998/FakeName/compare/v1.0.1...v1.0.2) (2023-05-06)
 
 

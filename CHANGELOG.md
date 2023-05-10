@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.4](https://github.com/ArchiDog1998/FakeName/compare/v1.0.3...v1.0.4) (2023-05-10)
+
+
+### Bug Fixes
+
+* add character names record and friends name changing. ([e56907c](https://github.com/ArchiDog1998/FakeName/commit/e56907c2734e062b8a2720fc39210234e9b6fbc1))
+* add fake friends feature. ([1a663dd](https://github.com/ArchiDog1998/FakeName/commit/1a663dd07acd4e21900d6218a15d1d33c1283acf))
+
 ## [1.0.3](https://github.com/ArchiDog1998/FakeName/compare/v1.0.2...v1.0.3) (2023-05-09)
 
 

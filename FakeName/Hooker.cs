@@ -134,35 +134,26 @@ public class Hooker
     {
         try
         {
-            if (!Service.Config.Enabled)
+            if (Service.Config.Enabled)
             {
-                SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-                    titlePtr, namePtr, fcNamePtr, iconId);
-                return;
+                var nameSe = GetSeStringFromPtr(namePtr).TextValue;
+                if (Service.ClientState.LocalPlayer != null && GetNamesFull(Service.ClientState.LocalPlayer.Name.TextValue).Contains(nameSe))
+                {
+                    GetPtrFromSeString(Service.Config.FakeNameText, namePtr);
+                }
+                else if (Service.Config.AllPlayerReplace)
+                {
+                    GetPtrFromSeString(GetChangedName(nameSe), namePtr);
+                }
             }
-
-            var nameSe = GetSeStringFromPtr(namePtr).TextValue;
-            if (Service.ClientState.LocalPlayer != null && GetNamesFull(Service.ClientState.LocalPlayer.Name.TextValue).Contains(nameSe))
-            {
-                SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-                    titlePtr, GetPtrFromSeString(Service.Config.FakeNameText), fcNamePtr, iconId);
-                return;
-            }
-
-            if (!Service.Config.AllPlayerReplace)
-            {
-                SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-                    titlePtr, namePtr, fcNamePtr, iconId);
-                return;
-            }
-
-            SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-                titlePtr, GetPtrFromSeString(GetChangedName(nameSe)), fcNamePtr, iconId);
         }
         catch (Exception ex)
         {
             PluginLog.Error(ex, "Failed to change name plate");
         }
+
+        SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
+            titlePtr, namePtr, fcNamePtr, iconId);
     }
 
 
@@ -195,12 +186,9 @@ public class Hooker
             var str = GetSeStringFromPtr(seStringPtr);
             if (ChangeSeString(str))
             {
-                return GetPtrFromSeString(str);
+                GetPtrFromSeString(str, seStringPtr);
             }
-            else
-            {
-                return seStringPtr;
-            }
+            return seStringPtr;
         }
         catch (Exception ex)
         {
@@ -209,21 +197,11 @@ public class Hooker
         }
     }
 
-    public static IntPtr GetPtrFromSeString(SeString str)
+    public static void GetPtrFromSeString(SeString str, IntPtr ptr)
     {
         var bytes = str.Encode();
-        var pointer = Marshal.AllocHGlobal(bytes.Length + 1);
-        try
-        {
-            Marshal.Copy(bytes, 0, pointer, bytes.Length);
-            Marshal.WriteByte(pointer, bytes.Length, 0);
-
-            return pointer;
-        }
-        finally
-        {
-            Marshal.FreeHGlobal(pointer);
-        }
+        Marshal.Copy(bytes, 0, ptr, bytes.Length);
+        Marshal.WriteByte(ptr, bytes.Length, 0);
     }
 
     public static SeString GetSeStringFromPtr(IntPtr seStringPtr)

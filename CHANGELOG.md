@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/ArchiDog1998/FakeName/compare/v1.0.5...v1.0.6) (2023-05-25)
+
+
+### Bug Fixes
+
+* patch 6.4 ([f338987](https://github.com/ArchiDog1998/FakeName/commit/f33898737fd51738f0354cfcb2e65d5b61f33edd))
+
 ## [1.0.5](https://github.com/ArchiDog1998/FakeName/compare/v1.0.4...v1.0.5) (2023-05-21)
 
 

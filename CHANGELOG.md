@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/ArchiDog1998/FakeName/compare/v1.0.6...v1.0.7) (2023-05-28)
+
+
+### Bug Fixes
+
+* fixed with nameplate hook. ([da5bf90](https://github.com/ArchiDog1998/FakeName/commit/da5bf9055b3e341d294b359ff1fd9b14e1477c8a))
+
 ## [1.0.6](https://github.com/ArchiDog1998/FakeName/compare/v1.0.5...v1.0.6) (2023-05-25)
 
 

@@ -23,13 +23,13 @@ public class Hooker
     private Hook<AtkTextNodeSetTextDelegate> AtkTextNodeSetTextHook { get; init; }
 
     private delegate void SetNamePlateDelegate(IntPtr addon, bool isPrefixTitle, 
-        bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, int iconId);
+        bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, IntPtr prefix, int iconId);
 
-    ///// <summary>
-    ///// https://github.com/Haplo064/JobIcons/blob/master/PluginAddressResolver.cs#L34
-    ///// </summary>
-    //[Signature("48 89 5C 24 ?? 48 89 6C 24 ?? 56 57 41 54 41 56 41 57 48 83 EC 40 44 0F B6 E2", DetourName = nameof(SetNamePlateDetour))]
-    //private Hook<SetNamePlateDelegate> SetNamePlateHook { get; init; }
+    /// <summary>
+    /// https://github.com/shdwp/xivPartyIcons/blob/main/PartyIcons/Api/PluginAddressResolver.cs#L40
+    /// </summary>
+    [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 5C 24 ?? 45 38 BE", DetourName = nameof(SetNamePlateDetour))]
+    private Hook<SetNamePlateDelegate> SetNamePlateHook { get; init; }
 
     public static Dictionary<string[], string> Replacement { get; } = new Dictionary<string[], string>();
 
@@ -38,7 +38,7 @@ public class Hooker
         SignatureHelper.Initialise(this);
 
         AtkTextNodeSetTextHook.Enable();
-        //SetNamePlateHook.Enable();
+        SetNamePlateHook.Enable();
 
         Service.Framework.Update += Framework_Update;
         Service.ClientState.Login += ClientState_Login;
@@ -47,7 +47,7 @@ public class Hooker
     public unsafe void Dispose()
     {
         AtkTextNodeSetTextHook.Dispose();
-        //SetNamePlateHook.Dispose();
+        SetNamePlateHook.Dispose();
         Service.Framework.Update -= Framework_Update;
         Service.ClientState.Login -= ClientState_Login;
     }
@@ -130,7 +130,7 @@ public class Hooker
     }
 
     private unsafe void SetNamePlateDetour(IntPtr namePlateObjectPtr, bool isPrefixTitle,
-        bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, int iconId)
+        bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, IntPtr prefix, int iconId)
     {
         try
         {
@@ -152,8 +152,8 @@ public class Hooker
             PluginLog.Error(ex, "Failed to change name plate");
         }
 
-        //SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-        //    titlePtr, namePtr, fcNamePtr, iconId);
+        SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
+            titlePtr, namePtr, fcNamePtr, prefix, iconId);
     }
 
 

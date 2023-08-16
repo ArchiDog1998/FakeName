@@ -74,10 +74,13 @@ public class Hooker
     private static bool IsRunning = false;
     public static bool IsStreaming { get; set; } = false;
     private static DateTime LastCheck = DateTime.MinValue;
-    private static readonly string[] AppNames = new string[]
+    private static readonly string[] AppEqualNames = new string[]
     {
         "obs32",
         "obs64",
+    };
+    private static readonly string[] AppStartNames = new string[]
+    {
         "XSplit",
     };
     private unsafe void Framework_Update(Dalamud.Game.Framework framework)
@@ -92,7 +95,9 @@ public class Hooker
                 LastCheck = DateTime.Now;
 
                 var processes = Process.GetProcesses();
-                IsStreaming = processes.Any(x => AppNames.Any(n => x.ProcessName.StartsWith(n, StringComparison.OrdinalIgnoreCase)));
+                IsStreaming = processes.Any(x =>
+                AppStartNames.Any(n => x.ProcessName.StartsWith(n, StringComparison.OrdinalIgnoreCase))
+                || AppEqualNames.Any(n => x.ProcessName.Equals(n, StringComparison.OrdinalIgnoreCase)));
             }
 
             if (!Service.Condition.Any()) return;

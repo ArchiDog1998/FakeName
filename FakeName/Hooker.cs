@@ -1,15 +1,22 @@
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
 using Dalamud.Logging;
+using Dalamud.Memory;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Client.UI.Info;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+
 namespace FakeName;
 
 public class Hooker
@@ -64,45 +71,80 @@ public class Hooker
         }
     }
 
+    private static bool IsRunning = false;
+    public static bool IsStreaming { get; set; } = false;
+    private static DateTime LastCheck = DateTime.MinValue;
+    private static readonly string[] AppNames = new string[]
+    {
+        "obs32",
+        "obs64",
+        "XSplit",
+    };
     private unsafe void Framework_Update(Dalamud.Game.Framework framework)
     {
-        if (!Service.Condition.Any()) return;
-        var player = Service.ClientState.LocalPlayer;
-        if (player == null) return;
+        if (IsRunning) return;
+        IsRunning = true;
 
-        Replacement.Clear();
-        Replacement[GetNamesSimple(player.Name.TextValue)] = Service.Config.FakeNameText;
-
-        if (!Service.Config.AllPlayerReplace) return;
-
-        foreach (var obj in Service.ObjectTable)
+        Task.Run(() =>
         {
-            if (obj is not PlayerCharacter member) continue;
-            var memberName = member.Name.TextValue;
-            if (memberName == player.Name.TextValue) continue;
-
-            Replacement[new string[] { memberName }] = GetChangedName(memberName);
-        }
-
-        foreach (var obj in Service.Config.FriendList)
-        {
-            Replacement[new string[] { obj }] = GetChangedName(obj);
-        }
-
-        var friendList = (AddonFriendList*)Service.GameGui.GetAddonByName("FriendList", 1);
-        if (friendList == null) return;
-
-        var list = friendList->FriendList;
-        for (int i = 0; i < list->ListLength; i++)
-        {
-            var item = list->ItemRendererList[i];
-            var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
-
-            if (Service.Config.FriendList.Add(textNode->NodeText.ToString()))
+            if((DateTime.Now - LastCheck).TotalSeconds > 1)
             {
-                Service.Config.SaveConfig();
+                LastCheck = DateTime.Now;
+
+                var processes = Process.GetProcesses();
+                IsStreaming = processes.Any(x => AppNames.Any(n => x.ProcessName.StartsWith(n, StringComparison.OrdinalIgnoreCase)));
             }
-        }
+
+            if (!Service.Condition.Any()) return;
+            var player = Service.ClientState.LocalPlayer;
+            if (player == null) return;
+
+            Replacement.Clear();
+            Replacement[GetNamesSimple(player.Name.TextValue)] = Service.Config.FakeNameText;
+
+            if (!Service.Config.AllPlayerReplace) return;
+
+            foreach (var obj in Service.ObjectTable)
+            {
+                if (obj is not PlayerCharacter member) continue;
+                var memberName = member.Name.TextValue;
+                if (memberName == player.Name.TextValue) continue;
+
+                Replacement[new string[] { memberName }] = GetChangedName(memberName);
+            }
+
+            if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
+            {
+                foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
+                {
+                    var name = MemoryHelper.ReadStringNullTerminated((IntPtr)x.Name);
+                    Replacement[new string[] { name }] = GetChangedName(name);
+                }
+            }
+            else
+            {
+                foreach (var obj in Service.Config.FriendList)
+                {
+                    Replacement[new string[] { obj }] = GetChangedName(obj);
+                }
+            }
+
+            var friendList = (AddonFriendList*)Service.GameGui.GetAddonByName("FriendList", 1);
+            if (friendList == null) return;
+
+            var list = friendList->FriendList;
+            for (int i = 0; i < list->ListLength; i++)
+            {
+                var item = list->ItemRendererList[i];
+                var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
+
+                if (Service.Config.FriendList.Add(textNode->NodeText.ToString()))
+                {
+                    Service.Config.SaveConfig();
+                }
+            }
+            IsRunning = false;
+        });
     }
 
     private static string[] GetNamesSimple(string name)

@@ -20,7 +20,12 @@ internal class ConfigWindow : Window
             localName = localPlayer.Name.TextValue;
         }
 
-        if (ImGui.Checkbox("Enable", ref Service.Config.Enabled))
+        if (ImGui.Checkbox("Enable", ref Service.Config.enabled))
+        {
+            Service.Config.SaveConfig();
+        }
+
+        if (ImGui.Checkbox("Only Change in Stream", ref Service.Config.OnlyInStream))
         {
             Service.Config.SaveConfig();
         }

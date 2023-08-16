@@ -1,11 +1,15 @@
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
 using Dalamud.Logging;
+using Dalamud.Memory;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Client.UI.Info;
 using FFXIVClientStructs.FFXIV.Component.GUI;
+using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,9 +88,20 @@ public class Hooker
             Replacement[new string[] { memberName }] = GetChangedName(memberName);
         }
 
-        foreach (var obj in Service.Config.FriendList)
+        if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
         {
-            Replacement[new string[] { obj }] = GetChangedName(obj);
+            foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
+            {
+                var name = MemoryHelper.ReadStringNullTerminated((IntPtr)x.Name);
+                Replacement[new string[] { name }] = GetChangedName(name);
+            }
+        }
+        else
+        {
+            foreach (var obj in Service.Config.FriendList)
+            {
+                Replacement[new string[] { obj }] = GetChangedName(obj);
+            }
         }
 
         var friendList = (AddonFriendList*)Service.GameGui.GetAddonByName("FriendList", 1);

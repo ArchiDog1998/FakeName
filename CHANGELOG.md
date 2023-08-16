@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/ArchiDog1998/FakeName/compare/v1.0.8...v1.0.9) (2023-08-16)
+
+
+### Bug Fixes
+
+* fixed checking obs. ([e9f5b32](https://github.com/ArchiDog1998/FakeName/commit/e9f5b32166916c497e19eace66b00eef5dbfdc4b))
+
 ## [1.0.8](https://github.com/ArchiDog1998/FakeName/compare/v1.0.7...v1.0.8) (2023-08-16)
 
 

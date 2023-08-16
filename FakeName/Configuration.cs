@@ -1,4 +1,5 @@
 using Dalamud.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -9,8 +10,25 @@ public class Configuration : IPluginConfiguration
 {
     public int Version { get; set; } = 0;
 
-    public bool Enabled = false;
-    
+    [JsonIgnore]
+    public bool Enabled
+    {
+        get
+        {
+            if(OnlyInStream)
+            {
+                return Hooker.IsStreaming;
+            }
+            else
+            {
+                return enabled;
+            }
+        }
+    }
+
+    public bool enabled = false;
+    public bool OnlyInStream = true;
+
     public bool AllPlayerReplace = false;
 
     public string FakeNameText = "";

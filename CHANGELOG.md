@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.8](https://github.com/ArchiDog1998/FakeName/compare/v1.0.7...v1.0.8) (2023-08-16)
+
+
+### Bug Fixes
+
+* add a stream mode. ([b59c10c](https://github.com/ArchiDog1998/FakeName/commit/b59c10c2ae8003d54b1f845a500ea51cf7d22aed))
+* add cross party. ([8cfa8b2](https://github.com/ArchiDog1998/FakeName/commit/8cfa8b2a7348d181cfa13416697d8d2a39884833))
+
 ## [1.0.7](https://github.com/ArchiDog1998/FakeName/compare/v1.0.6...v1.0.7) (2023-05-28)
 
 

@@ -1,5 +1,6 @@
 using Dalamud.Game.Command;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using FakeName.Windows;
 
 namespace FakeName;
@@ -12,7 +13,7 @@ public class Plugin : IDalamudPlugin
 
     internal WindowManager WindowManager { get; }
 
-    public Plugin(DalamudPluginInterface pluginInterface, CommandManager commandManager)
+    public Plugin(DalamudPluginInterface pluginInterface, ICommandManager commandManager)
     {
         pluginInterface.Create<Service>();
         Service.Config = Service.Interface.GetPluginConfig() as Configuration ?? new Configuration();

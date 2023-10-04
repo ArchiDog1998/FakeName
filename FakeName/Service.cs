@@ -1,11 +1,6 @@
-using Dalamud.Game;
-using Dalamud.Game.ClientState;
-using Dalamud.Game.ClientState.Conditions;
-using Dalamud.Game.ClientState.Objects;
-using Dalamud.Game.Command;
-using Dalamud.Game.Gui;
 using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 
 namespace FakeName;
 
@@ -17,21 +12,26 @@ internal class Service
     internal static DalamudPluginInterface Interface { get; private set; }
 
     [PluginService]
-    internal static ClientState ClientState { get; private set; }
+    internal static IClientState ClientState { get; private set; }
 
     [PluginService]
-    internal static CommandManager CommandManager { get; private set; }
+    internal static ICommandManager CommandManager { get; private set; }
 
     [PluginService]
-    internal static ObjectTable ObjectTable { get; private set; }
+    internal static IObjectTable ObjectTable { get; private set; }
     [PluginService]
-    public static Framework Framework  { get; private set; }
-
-    [PluginService]
-    public static Condition Condition { get; private set; }
-
+    public static IFramework Framework  { get; private set; }
 
     [PluginService]
-    public static GameGui GameGui { get; private set; }
+    public static ICondition Condition { get; private set; }
 
+
+    [PluginService]
+    public static IGameGui GameGui { get; private set; }
+
+    [PluginService]
+    public static IGameInteropProvider Hook { get; private set; }
+
+    [PluginService]
+    public static IPluginLog Log { get; private set; }
 }

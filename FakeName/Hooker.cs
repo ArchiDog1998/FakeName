@@ -3,13 +3,11 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
-using Dalamud.Logging;
 using Dalamud.Memory;
+using Dalamud.Plugin.Services;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Info;
-using FFXIVClientStructs.FFXIV.Component.GUI;
-using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,7 +40,7 @@ public class Hooker
 
     internal unsafe Hooker()
     {
-        SignatureHelper.Initialise(this);
+        Service.Hook.InitializeFromAttributes(this);
 
         AtkTextNodeSetTextHook.Enable();
         SetNamePlateHook.Enable();
@@ -59,7 +57,7 @@ public class Hooker
         Service.ClientState.Login -= ClientState_Login;
     }
 
-    private void ClientState_Login(object sender, EventArgs e)
+    private void ClientState_Login()
     {
         var player = Service.ClientState.LocalPlayer;
         if (player == null) return;
@@ -83,7 +81,7 @@ public class Hooker
     {
         "XSplit",
     };
-    private unsafe void Framework_Update(Dalamud.Game.Framework framework)
+    private unsafe void Framework_Update(IFramework framework)
     {
         if (IsRunning) return;
         IsRunning = true;
@@ -196,7 +194,7 @@ public class Hooker
         }
         catch (Exception ex)
         {
-            PluginLog.Error(ex, "Failed to change name plate");
+            Service.Log.Error(ex, "Failed to change name plate");
         }
 
         SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
@@ -239,7 +237,7 @@ public class Hooker
         }
         catch (Exception ex)
         {
-            PluginLog.Error(ex, "Something wrong with change name!");
+            Service.Log.Error(ex, "Something wrong with change name!");
             return seStringPtr;
         }
     }
@@ -275,7 +273,7 @@ public class Hooker
         }
         catch (Exception ex)
         {
-            PluginLog.Error(ex, "Something wrong with replacement!");
+            Service.Log.Error(ex, "Something wrong with replacement!");
             return false;
         }
     }

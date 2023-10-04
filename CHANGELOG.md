@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.10](https://github.com/ArchiDog1998/FakeName/compare/v1.0.9...v1.0.10) (2023-10-04)
+
+
+### Bug Fixes
+
+* api 9. ([73db581](https://github.com/ArchiDog1998/FakeName/commit/73db581ac31f3edbb9c2e2ce8d4e1e47d2b8ee35))
+* update submodules. ([88862c5](https://github.com/ArchiDog1998/FakeName/commit/88862c5a71ede7547b3e509df06d1d46cb9163d3))
+
 ## [1.0.9](https://github.com/ArchiDog1998/FakeName/compare/v1.0.8...v1.0.9) (2023-08-16)
 
 

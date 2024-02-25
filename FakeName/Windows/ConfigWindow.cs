@@ -115,7 +115,6 @@ internal class ConfigWindow : Window
                 index++;
             }
 
-
             ImGui.EndTable();
             if (removeIndex > -1)
             {

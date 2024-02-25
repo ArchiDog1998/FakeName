@@ -2,13 +2,12 @@ using Dalamud.Game.Command;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FakeName.Windows;
+using System;
 
 namespace FakeName;
 
 public class Plugin : IDalamudPlugin
 {
-    public string Name => "FakeName";
-    
     internal Hooker Hooker { get; }
 
     internal WindowManager WindowManager { get; }
@@ -34,6 +33,8 @@ public class Plugin : IDalamudPlugin
 
         Hooker.Dispose();
         WindowManager.Dispose();
+
+        GC.SuppressFinalize(this);
     }
 
     private void OnCommand(string command, string arguments)

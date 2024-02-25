@@ -33,9 +33,10 @@ public class Configuration : IPluginConfiguration
 
     public string FakeNameText = "";
 
-    public HashSet<string> CharacterNames = new HashSet<string>();
-    public HashSet<string> FriendList = new HashSet<string>();
+    public HashSet<string> CharacterNames = new();
+    public HashSet<string> FriendList = new();
 
+    public List<(string, string)> NameDict = new();
     internal void SaveConfig()
     {
         Service.Interface.SavePluginConfig(this);

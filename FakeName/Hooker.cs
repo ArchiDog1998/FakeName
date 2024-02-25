@@ -116,11 +116,6 @@ public class Hooker
                 Replacement[new string[] { memberName }] = GetChangedName(memberName);
             }
 
-            foreach ((var key, var value) in Service.Config.NameDict)
-            {
-                Replacement[new string[] { key }] = value;
-            }
-
             if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
             {
                 foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
@@ -286,6 +281,11 @@ public class Hooker
     public static string GetChangedName(string str)
     {
         if (string.IsNullOrEmpty(str)) return str;
+
+        foreach ((var key, var value) in Service.Config.NameDict)
+        {
+            if (key == str) return value;
+        }
         var lt = str.Split(' ');
         if (lt.Length != 2) return str;
         return string.Join(" . ", lt.Select(s => s.ToUpper().FirstOrDefault()));
@@ -316,6 +316,7 @@ public class Hooker
 
                 var t = load.Text.Replace(name, replacement);
                 if (t == load.Text) continue;
+
                 load.Text = t;
                 result = true;
             }

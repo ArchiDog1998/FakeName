@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.1.1](https://github.com/ArchiDog1998/FakeName/compare/v1.1.0...v1.1.1) (2024-02-25)
+
+
+### Bug Fixes
+
+* fixed some replacing bug. ([ab93fed](https://github.com/ArchiDog1998/FakeName/commit/ab93fedafa0892a7dfa388bcb29149ac49deb53e))
+* name dict fix. ([7215584](https://github.com/ArchiDog1998/FakeName/commit/7215584ec0e7545a9ed67527d2ccff99823e9a71))
+* replacement names fix. ([a1458af](https://github.com/ArchiDog1998/FakeName/commit/a1458af81a39c357acda7593a7600ed21c13b8c6))
+
 ## [1.1.0](https://github.com/ArchiDog1998/FakeName/compare/v1.0.10...v1.1.0) (2024-02-25)
 
 

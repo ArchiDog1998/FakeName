@@ -105,6 +105,11 @@ public class Hooker
             Replacement.Clear();
             Replacement[GetNamesSimple(player.Name.TextValue)] = Service.Config.FakeNameText;
 
+            foreach ((var key, var value) in Service.Config.NameDict)
+            {
+                Replacement[new string[] { key }] = value;
+            }
+
             if (!Service.Config.AllPlayerReplace) return;
 
             foreach (var obj in Service.ObjectTable)
@@ -141,7 +146,8 @@ public class Hooker
                 var item = list->ItemRendererList[i];
                 var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
 
-                if (Service.Config.FriendList.Add(textNode->NodeText.ToString()))
+                var text = textNode->NodeText.ToString();
+                if (!text.Contains('.') && Service.Config.FriendList.Add(text))
                 {
                     Service.Config.SaveConfig();
                 }
@@ -209,15 +215,15 @@ public class Hooker
 
         var first = names[0];
         var last = names[1];
-        var firstShort = first.ToUpper()[0] + ".";
-        var lastShort = last.ToUpper()[0] + ".";
+        //var firstShort = first.ToUpper()[0] + ".";
+        //var lastShort = last.ToUpper()[0] + ".";
 
         return new string[]
         {
             name,
-            $"{first} {lastShort}",
-            $"{firstShort} {last}",
-            $"{firstShort} {lastShort}",
+            //$"{first} {lastShort}",
+            //$"{firstShort} {last}",
+            //$"{firstShort} {lastShort}",
             first, last,
         };
     }

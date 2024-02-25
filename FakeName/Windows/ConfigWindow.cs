@@ -1,11 +1,7 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Windowing;
-using FFXIVClientStructs.FFXIV.Client.UI;
 using ImGuiNET;
-using System;
-using System.Drawing;
 using System.Linq;
-using static Dalamud.Interface.Utility.Raii.ImRaii;
 
 namespace FakeName.Windows;
 

@@ -88,7 +88,7 @@ public class Hooker
 
         Task.Run(() =>
         {
-            if((DateTime.Now - LastCheck).TotalSeconds > 1)
+            if ((DateTime.Now - LastCheck).TotalSeconds > 1)
             {
                 LastCheck = DateTime.Now;
 
@@ -116,6 +116,11 @@ public class Hooker
                 Replacement[new string[] { memberName }] = GetChangedName(memberName);
             }
 
+            foreach ((var key, var value) in Service.Config.NameDict)
+            {
+                Replacement[new string[] { key }] = value;
+            }
+
             if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
             {
                 foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
@@ -136,7 +141,7 @@ public class Hooker
             if (friendList == null) return;
 
             var list = friendList->FriendList;
-            for (int i = 0; i < list->ListLength; i++)
+            for (var i = 0; i < list->ListLength; i++)
             {
                 var item = list->ItemRendererList[i];
                 var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
@@ -301,7 +306,6 @@ public class Hooker
     private static bool ReplacePlayerName(SeString text, string name, string replacement)
     {
         if (string.IsNullOrEmpty(name)) return false;
-        if (text.Payloads.Count > 10) return false;
 
         var result = false;
         foreach (var payLoad in text.Payloads)

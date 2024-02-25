@@ -19,12 +19,12 @@ internal class Service
 
     [PluginService]
     internal static IObjectTable ObjectTable { get; private set; }
+
     [PluginService]
     public static IFramework Framework  { get; private set; }
 
     [PluginService]
     public static ICondition Condition { get; private set; }
-
 
     [PluginService]
     public static IGameGui GameGui { get; private set; }

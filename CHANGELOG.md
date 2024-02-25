@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/ArchiDog1998/FakeName/compare/v1.0.10...v1.1.0) (2024-02-25)
+
+
+### Features
+
+* add custom name value pair feature. ([1549bc9](https://github.com/ArchiDog1998/FakeName/commit/1549bc9e55309c9ab58f0d100ddaf6cef6da24bc))
+
 ## [1.0.10](https://github.com/ArchiDog1998/FakeName/compare/v1.0.9...v1.0.10) (2023-10-04)
 
 

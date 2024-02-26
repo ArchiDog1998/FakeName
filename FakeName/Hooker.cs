@@ -25,7 +25,7 @@ public class Hooker
     /// https://github.com/aers/FFXIVClientStructs/blob/main/FFXIVClientStructs/FFXIV/Component/GUI/AtkTextNode.cs#L79
     /// </summary>
     [Signature("E8 ?? ?? ?? ?? 8D 4E 32", DetourName = nameof(AtkTextNodeSetTextDetour))]
-    private Hook<AtkTextNodeSetTextDelegate> AtkTextNodeSetTextHook { get; init; }
+    private Hook<AtkTextNodeSetTextDelegate>? AtkTextNodeSetTextHook { get; init; }
 
     private delegate void SetNamePlateDelegate(IntPtr addon, bool isPrefixTitle, 
         bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, IntPtr prefix, int iconId);
@@ -34,7 +34,7 @@ public class Hooker
     /// https://github.com/shdwp/xivPartyIcons/blob/main/PartyIcons/Api/PluginAddressResolver.cs#L40
     /// </summary>
     [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 5C 24 ?? 45 38 BE", DetourName = nameof(SetNamePlateDetour))]
-    private Hook<SetNamePlateDelegate> SetNamePlateHook { get; init; }
+    private Hook<SetNamePlateDelegate>? SetNamePlateHook { get; init; }
 
     public static List<(string[], string)> Replacement { get; private set; } = new();
 
@@ -42,8 +42,8 @@ public class Hooker
     {
         Service.Hook.InitializeFromAttributes(this);
 
-        AtkTextNodeSetTextHook.Enable();
-        SetNamePlateHook.Enable();
+        AtkTextNodeSetTextHook?.Enable();
+        SetNamePlateHook?.Enable();
 
         Service.Framework.Update += Framework_Update;
         Service.ClientState.Login += ClientState_Login;
@@ -51,8 +51,8 @@ public class Hooker
 
     public unsafe void Dispose()
     {
-        AtkTextNodeSetTextHook.Dispose();
-        SetNamePlateHook.Dispose();
+        AtkTextNodeSetTextHook?.Dispose();
+        SetNamePlateHook?.Dispose();
         Service.Framework.Update -= Framework_Update;
         Service.ClientState.Login -= ClientState_Login;
     }
@@ -103,9 +103,11 @@ public class Hooker
                 }
 
                 var player = Service.ClientState.LocalPlayer;
-                if (player == null) return;
 
-                replacements.Add((GetNamesSimple(player.Name.TextValue), Service.Config.FakeNameText));
+                if (player != null)
+                {
+                    replacements.Add((GetNamesSimple(player.Name.TextValue), Service.Config.FakeNameText));
+                }
 
                 foreach ((var key, var value) in Service.Config.NameDict)
                 {
@@ -118,7 +120,7 @@ public class Hooker
                 {
                     if (obj is not PlayerCharacter member) continue;
                     var memberName = member.Name.TextValue;
-                    if (memberName == player.Name.TextValue) continue;
+                    if (memberName == player?.Name.TextValue) continue;
 
                     replacements.Add((new string[] { memberName }, GetChangedName(memberName)));
                 }
@@ -181,10 +183,10 @@ public class Hooker
     {
         if (!Service.Config.Enabled)
         {
-            AtkTextNodeSetTextHook.Original(node,text);
+            AtkTextNodeSetTextHook?.Original(node,text);
             return;
         }
-        AtkTextNodeSetTextHook.Original(node, ChangeName(text));
+        AtkTextNodeSetTextHook?.Original(node, ChangeName(text));
     }
 
     private unsafe void SetNamePlateDetour(IntPtr namePlateObjectPtr, bool isPrefixTitle,
@@ -210,7 +212,7 @@ public class Hooker
             Service.Log.Error(ex, "Failed to change name plate");
         }
 
-        SetNamePlateHook.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
+        SetNamePlateHook?.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
             titlePtr, namePtr, fcNamePtr, prefix, iconId);
     }
 

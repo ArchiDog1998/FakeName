@@ -3,7 +3,7 @@
 
     <PropertyGroup>
         <AssemblyVersion>1.1.1</AssemblyVersion>
-        <TargetFramework>net7.0-windows</TargetFramework>
+        <TargetFramework>net8.0-windows</TargetFramework>
         <PlatformTarget>x64</PlatformTarget>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Authors>ArchiTed</Authors>

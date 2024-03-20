@@ -36,7 +36,7 @@ public class Hooker
     [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 5C 24 ?? 45 38 BE", DetourName = nameof(SetNamePlateDetour))]
     private Hook<SetNamePlateDelegate>? SetNamePlateHook { get; init; }
 
-    public static List<(string[], string)> Replacement { get; private set; } = new();
+    public static List<(string[], string)> Replacement { get; private set; } = [];
 
     internal unsafe Hooker()
     {
@@ -72,111 +72,105 @@ public class Hooker
     private static bool IsRunning = false;
     public static bool IsStreaming { get; set; } = false;
     private static DateTime LastCheck = DateTime.MinValue;
-    private static readonly string[] AppEqualNames = new string[]
-    {
+    private static readonly string[] AppEqualNames =
+    [
         "obs32",
         "obs64",
-    };
-    private static readonly string[] AppStartNames = new string[]
-    {
+    ];
+    private static readonly string[] AppStartNames =
+    [
         "XSplit",
-    };
+    ];
     private unsafe void Framework_Update(IFramework framework)
     {
-        if (IsRunning) return;
-        IsRunning = true;
+        var replacements = new List<(string[], string)>();
 
-        Task.Run(() =>
+        try
         {
-            var replacements = new List<(string[], string)>();
-
-            try
+            if ((DateTime.Now - LastCheck).TotalSeconds > 1)
             {
-                if ((DateTime.Now - LastCheck).TotalSeconds > 1)
+                LastCheck = DateTime.Now;
+
+                var processes = Process.GetProcesses();
+                IsStreaming = processes.Any(x =>
+                AppStartNames.Any(n => x.ProcessName.StartsWith(n, StringComparison.OrdinalIgnoreCase))
+                || AppEqualNames.Any(n => x.ProcessName.Equals(n, StringComparison.OrdinalIgnoreCase)));
+            }
+
+            var player = Service.ClientState.LocalPlayer;
+
+            if (player != null)
+            {
+                replacements.Add((GetNamesSimple(player.Name.TextValue), Service.Config.FakeNameText));
+            }
+
+            foreach ((var key, var value) in Service.Config.NameDict)
+            {
+                replacements.Add((new string[] { key }, value));
+            }
+
+            if (!Service.Config.AllPlayerReplace) return;
+
+            foreach (var obj in Service.ObjectTable)
+            {
+                if (obj is not PlayerCharacter member) continue;
+                var memberName = member.Name.TextValue;
+                if (memberName == player?.Name.TextValue) continue;
+
+                replacements.Add((new string[] { memberName }, GetChangedName(memberName)));
+            }
+
+            if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
+            {
+                foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
                 {
-                    LastCheck = DateTime.Now;
-
-                    var processes = Process.GetProcesses();
-                    IsStreaming = processes.Any(x =>
-                    AppStartNames.Any(n => x.ProcessName.StartsWith(n, StringComparison.OrdinalIgnoreCase))
-                    || AppEqualNames.Any(n => x.ProcessName.Equals(n, StringComparison.OrdinalIgnoreCase)));
-                }
-
-                var player = Service.ClientState.LocalPlayer;
-
-                if (player != null)
-                {
-                    replacements.Add((GetNamesSimple(player.Name.TextValue), Service.Config.FakeNameText));
-                }
-
-                foreach ((var key, var value) in Service.Config.NameDict)
-                {
-                    replacements.Add((new string[] { key }, value));
-                }
-
-                if (!Service.Config.AllPlayerReplace) return;
-
-                foreach (var obj in Service.ObjectTable)
-                {
-                    if (obj is not PlayerCharacter member) continue;
-                    var memberName = member.Name.TextValue;
-                    if (memberName == player?.Name.TextValue) continue;
-
-                    replacements.Add((new string[] { memberName }, GetChangedName(memberName)));
-                }
-
-                if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
-                {
-                    foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
-                    {
-                        var name = MemoryHelper.ReadStringNullTerminated((IntPtr)x.Name);
-                        replacements.Add((new string[] { name }, GetChangedName(name)));
-                    }
-                }
-                else
-                {
-                    foreach (var obj in Service.Config.FriendList)
-                    {
-                        replacements.Add((new string[] { obj }, GetChangedName(obj)));
-                    }
-                }
-
-                var friendList = (AddonFriendList*)Service.GameGui.GetAddonByName("FriendList", 1);
-                if (friendList == null) return;
-
-                var list = friendList->FriendList;
-                for (var i = 0; i < list->ListLength; i++)
-                {
-                    var item = list->ItemRendererList[i];
-                    var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
-
-                    var text = textNode->NodeText.ToString();
-                    if (!text.Contains('.') && Service.Config.FriendList.Add(text))
-                    {
-                        Service.Config.SaveConfig();
-                    }
+                    var name = MemoryHelper.ReadStringNullTerminated((IntPtr)x.Name);
+                    replacements.Add((new string[] { name }, GetChangedName(name)));
                 }
             }
-            finally
+            else
             {
-                Replacement = replacements;
-                IsRunning = false;
+                foreach (var obj in Service.Config.FriendList)
+                {
+                    replacements.Add((new string[] { obj }, GetChangedName(obj)));
+                }
             }
-        });
+
+            var friendList = (AddonFriendList*)Service.GameGui.GetAddonByName("FriendList", 1);
+            if (friendList == null) return;
+
+            var list = friendList->FriendList;
+            for (var i = 0; i < list->ListLength; i++)
+            {
+                var item = list->ItemRendererList[i];
+                var textNode = item.AtkComponentListItemRenderer->AtkComponentButton.ButtonTextNode;
+
+                var text = textNode->NodeText.ToString();
+                if (!text.Contains('.') && Service.Config.FriendList.Add(text))
+                {
+                    Service.Config.SaveConfig();
+                }
+            }
+        }
+        finally
+        {
+            Replacement = replacements;
+            IsRunning = false;
+        }
     }
 
     private static string[] GetNamesSimple(string name)
     {
         var names = name.Split(' ');
-        if (names.Length != 2) return new string[] { name };
+        if (names.Length != 2) return [name];
 
         //var first = names[0];
 
-        return new string[]
-        {
+        return
+        [
             name,
             //first,
-        };
+        ];
     }
 
     private void AtkTextNodeSetTextDetour(IntPtr node, IntPtr text)
@@ -219,21 +213,21 @@ public class Hooker
     private static string[] GetNamesFull(string name)
     {
         var names = name.Split(' ');
-        if (names.Length != 2) return new string[] { name };
+        if (names.Length != 2) return [name];
 
         var first = names[0];
         var last = names[1];
         //var firstShort = first.ToUpper()[0] + ".";
         //var lastShort = last.ToUpper()[0] + ".";
 
-        return new string[]
-        {
+        return
+        [
             name,
             //$"{first} {lastShort}",
             //$"{firstShort} {last}",
             //$"{firstShort} {lastShort}",
             first, last,
-        };
+        ];
     }
 
     public static IntPtr ChangeName(IntPtr seStringPtr)

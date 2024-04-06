@@ -68,3 +68,10 @@ jobs:
           asset_path: artifact/latest.zip
           asset_name: latest.zip
           asset_content_type: application/zip
+
+      - name: Trigger Repo Update
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT }}
+          repository: ${{ github.repository_owner }}/Dalamud_Plugins
+          event-type: new-release

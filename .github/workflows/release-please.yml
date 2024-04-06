@@ -73,5 +73,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.PAT }}
-          repository: ${{ github.repository_owner }}/Dalamud_Plugins
+          repository: ${{ github.repository_owner }}/DalamudPlugins
           event-type: new-release

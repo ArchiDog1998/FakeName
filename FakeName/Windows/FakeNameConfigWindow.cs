@@ -109,5 +109,6 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
     }
 
     protected override string Kofi => "B0B0IN5DX";
+    protected override string Crowdin => "fakename";
     public override SearchableCollection Collection { get; } = new(Service.Config, new Config());
 }

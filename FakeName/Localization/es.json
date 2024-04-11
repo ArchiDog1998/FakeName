@@ -1,0 +1,14 @@
+{
+  "FakeName.DescriptionAboutCommand": "Open a config window about fake name.",
+  "FakeName.Punchline": "Show a fake name on your game ui.",
+  "XIVConfigUI.LocalString.Searching": "Search... ",
+  "FakeName.Windows.FakeNameConfigWindow+SettingItem": "Setting",
+  "FakeName.Description": "Show a fake name on your game ui.\n\nIf it messed up your chat box, please use chat2!",
+  "FakeName.ConfigurationName.enabled": "Enable",
+  "XIVConfigUI.LocalString.ResetToDefault": "Reset to Default Value.",
+  "FakeName.ConfigurationName.AllPlayerReplace": "Change All Player's Name",
+  "FakeName.ConfigurationName.FakeNameText": "Character Name",
+  "FakeName.ConfigurationName.OnlyInStream": "Only Change in Stream",
+  "XIVConfigUI.LocalString.ExecuteCommand": "Execute \"{0}\"",
+  "XIVConfigUI.LocalString.CopyCommand": "Copy \"{0}\""
+}

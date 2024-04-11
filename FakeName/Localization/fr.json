@@ -10,5 +10,7 @@
   "FakeName.ConfigurationName.FakeNameText": "Character Name",
   "FakeName.ConfigurationName.OnlyInStream": "Only Change in Stream",
   "XIVConfigUI.LocalString.ExecuteCommand": "Execute \"{0}\"",
-  "XIVConfigUI.LocalString.CopyCommand": "Copy \"{0}\""
+  "XIVConfigUI.LocalString.CopyCommand": "Copy \"{0}\"",
+  "XIVConfigUI.LocalString.SourceCode": "Click to see the source code!",
+  "XIVConfigUI.LocalString.Localization": "Click to open the crowdin for modifying localization!"
 }

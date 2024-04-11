@@ -16,21 +16,20 @@ public class Configuration : IPluginConfiguration
     {
         get
         {
-            if(OnlyInStream)
+            if (!enabled) return false;
+
+            if (OnlyInStream)
             {
                 return Hooker.IsStreaming;
             }
-            else
-            {
-                return enabled;
-            }
+            return true;
         }
     }
 
     [UI("Enable")]
     public bool enabled { get; set; } = false;
 
-    [UI("Only Change in Stream")]
+    [UI("Only Change in Stream", Parent = nameof(enabled))]
     public bool OnlyInStream { get; set; } = true;
 
     [UI("Change All Player's Name")]

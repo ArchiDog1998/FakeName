@@ -1,6 +1,7 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Internal;
 using ImGuiNET;
+using System.ComponentModel;
 using System.Linq;
 using XIVConfigUI;
 using XIVConfigUI.SearchableConfigs;
@@ -17,6 +18,7 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
         }
     }
 
+    [Description("Setting")]
     public class SettingItem : ConfigWindowItem
     {
         public override void Draw(ConfigWindow window)
@@ -106,5 +108,6 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
         }
     }
 
+    protected override string Kofi => "B0B0IN5DX";
     public override SearchableCollection Collection { get; } = new(Service.Config, new Config());
 }

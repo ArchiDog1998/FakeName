@@ -8,6 +8,7 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <Authors>ArchiTed</Authors>
         <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -16,6 +17,8 @@
 
     <ItemGroup>
 	  <PackageReference Include="DalamudPackager" Version="2.1.12" MakeZip="true" />
+	  <ProjectReference Include="..\XIVConfigUI\XIVConfigUI\XIVConfigUI.csproj" />
+        
         <Reference Include="FFXIVClientStructs">
             <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
             <Private>false</Private>
@@ -45,5 +48,4 @@
             <Private>false</Private>
         </Reference>
     </ItemGroup>
-
 </Project>

@@ -6,21 +6,23 @@ namespace FakeName.Windows;
 internal class WindowManager : IDisposable
 {
     internal readonly WindowSystem WindowSystem = new("FakeName");
-    internal ConfigWindow ConfigWindow { get; }
+    internal FakeNameConfigWindow ConfigWindow { get; }
 
     public WindowManager()
     {
-        ConfigWindow = new ConfigWindow();
+        ConfigWindow = new FakeNameConfigWindow();
         WindowSystem.AddWindow(ConfigWindow);
 
         Service.Interface.UiBuilder.Draw += DrawUi;
-        Service.Interface.UiBuilder.OpenConfigUi += ConfigWindow.Open;
+        Service.Interface.UiBuilder.OpenConfigUi += ConfigWindow.Toggle;
+        Service.Interface.UiBuilder.OpenMainUi += ConfigWindow.Toggle;
     }
 
     public void Dispose()
     {
         Service.Interface.UiBuilder.Draw -= DrawUi;
-        Service.Interface.UiBuilder.OpenConfigUi -= ConfigWindow.Open;
+        Service.Interface.UiBuilder.OpenConfigUi -= ConfigWindow.Toggle;
+        Service.Interface.UiBuilder.OpenMainUi -= ConfigWindow.Toggle;
         WindowSystem.RemoveAllWindows();
     }
 

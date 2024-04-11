@@ -2,6 +2,7 @@ using Dalamud.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using XIVConfigUI;
 
 namespace FakeName;
 
@@ -26,12 +27,17 @@ public class Configuration : IPluginConfiguration
         }
     }
 
-    public bool enabled = false;
-    public bool OnlyInStream = true;
+    [UI("Enable")]
+    public bool enabled { get; set; } = false;
 
-    public bool AllPlayerReplace = false;
+    [UI("Only Change in Stream")]
+    public bool OnlyInStream { get; set; } = true;
 
-    public string FakeNameText = "";
+    [UI("Change All Player's Name")]
+    public bool AllPlayerReplace { get; set; } = false;
+
+    [UI("Character Name")]
+    public string FakeNameText { get; set; } = Service.ClientState.LocalPlayer?.Name.TextValue ?? string.Empty;
 
     public HashSet<string> CharacterNames = [];
     public HashSet<string> FriendList = [];

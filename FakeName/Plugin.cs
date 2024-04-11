@@ -1,8 +1,7 @@
-using Dalamud.Game.Command;
 using Dalamud.Plugin;
-using Dalamud.Plugin.Services;
 using FakeName.Windows;
 using System;
+using XIVConfigUI;
 
 namespace FakeName;
 
@@ -12,33 +11,29 @@ public class Plugin : IDalamudPlugin
 
     internal WindowManager WindowManager { get; }
 
-    public Plugin(DalamudPluginInterface pluginInterface, ICommandManager commandManager)
+    public Plugin(DalamudPluginInterface pluginInterface)
     {
         pluginInterface.Create<Service>();
         Service.Config = Service.Interface.GetPluginConfig() as Configuration ?? new Configuration();
 
+        XIVConfigUIMain.Init(pluginInterface, "ArchiDog1998", "FakeName", "/fakename", "Open a config window about fake name.", OnCommand);
+
         WindowManager = new WindowManager();
         
         Hooker = new Hooker();
-
-        Service.CommandManager.AddHandler("/fakename", new CommandInfo(OnCommand)
-        {
-            HelpMessage = "Open a config window about fake name.",
-        });
     }
 
     public void Dispose()
     {
-        Service.CommandManager.RemoveHandler("/fakename");
-
         Hooker.Dispose();
         WindowManager.Dispose();
 
+        XIVConfigUIMain.Dispose();
         GC.SuppressFinalize(this);
     }
 
-    private void OnCommand(string command, string arguments)
+    private void OnCommand(string arguments)
     {
-        WindowManager.ConfigWindow.Open();
+        WindowManager.ConfigWindow.Toggle();
     }
 }

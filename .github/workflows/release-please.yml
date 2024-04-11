@@ -1,11 +1,12 @@
 on:
   push:
     branches:
-      - release
+      - main
 name: release-please
 jobs:
   release-please:
     name : releasePlz
+    if : ${{ startsWith(github.event.head_commit.message, 'chore:') || startsWith(github.event.head_commit.message, 'Merge pull request')}}
     runs-on: ubuntu-latest
     outputs:
       released: ${{ steps.rp.outputs.releases_created }}
@@ -16,7 +17,6 @@ jobs:
         with:
           release-type: node
           package-name: release-please-action
-          default-branch: release
   
   build:
     name : build
@@ -24,12 +24,14 @@ jobs:
     if: ${{ needs.release-please.outputs.released }}
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v1
         with:
-            dotnet-version: 7.0.x
+            dotnet-version: 8.0.x
              
       - name: Restore Dependencies
         run: dotnet restore
@@ -46,7 +48,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          path: .\FakeName\bin\Release\net7.0-windows\FakeName\
+          path: .\FakeName\bin\Release\net8.0-windows\FakeName\
 
   release:
     name: release

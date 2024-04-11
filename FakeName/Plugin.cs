@@ -19,7 +19,6 @@ public class Plugin : IDalamudPlugin
         XIVConfigUIMain.Init(pluginInterface, "ArchiDog1998", "FakeName", "/fakename", "Open a config window about fake name.", OnCommand);
 
         WindowManager = new WindowManager();
-        
         Hooker = new Hooker();
     }
 

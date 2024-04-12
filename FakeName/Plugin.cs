@@ -16,7 +16,7 @@ public class Plugin : IDalamudPlugin
         pluginInterface.Create<Service>();
         Service.Config = Service.Interface.GetPluginConfig() as Configuration ?? new Configuration();
 
-        XIVConfigUIMain.Init(pluginInterface, "ArchiDog1998", "FakeName", "/fakename", "Open a config window about fake name.", OnCommand);
+        XIVConfigUIMain.Init(pluginInterface, "/fakename", "Open a config window about fake name.", OnCommand);
 
         WindowManager = new WindowManager();
         Hooker = new Hooker();

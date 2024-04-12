@@ -32,10 +32,10 @@ public class Configuration : IPluginConfiguration
     [UI("Only Change in Stream", Parent = nameof(enabled))]
     public bool OnlyInStream { get; set; } = true;
 
-    [UI("Change All Player's Name")]
+    [UI("Change All Player's Name", Parent = nameof(enabled))]
     public bool AllPlayerReplace { get; set; } = false;
 
-    [UI("Character Name")]
+    [UI("Character Name", Parent = nameof(enabled))]
     public string FakeNameText { get; set; } = Service.ClientState.LocalPlayer?.Name.TextValue ?? string.Empty;
 
     public HashSet<string> CharacterNames = [];

@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.1.2](https://github.com/ArchiDog1998/FakeName/compare/v1.1.1...v1.1.2) (2024-04-11)
+
+
+### Bug Fixes
+
+* add xiv config ui submodule. ([2046c66](https://github.com/ArchiDog1998/FakeName/commit/2046c661f26b299530bae54147df7c3f3a2ba529))
+* fixed sth. ([07335e3](https://github.com/ArchiDog1998/FakeName/commit/07335e3278ca7ae5718b8614fc6ba1d21f77db50))
+* fixed ui. ([6a397d0](https://github.com/ArchiDog1998/FakeName/commit/6a397d0237e5909d8f87102b930a3d9228b8740a))
+* net8. ([43fed37](https://github.com/ArchiDog1998/FakeName/commit/43fed377c35f5da9a41381d7a41a56cf03366aea))
+* time to replace. ([8546940](https://github.com/ArchiDog1998/FakeName/commit/8546940affe60eb757fe02a8cb277c36a698c29c))
+* trigger name. ([1e839a7](https://github.com/ArchiDog1998/FakeName/commit/1e839a70e2e73d65ff5ce78162c391afe27ad494))
+* update link. ([8841c42](https://github.com/ArchiDog1998/FakeName/commit/8841c42e93d75b039d4a796f2e5d066be1b8cb79))
+
 ## [1.1.1](https://github.com/ArchiDog1998/FakeName/compare/v1.1.0...v1.1.1) (2024-02-25)
 
 

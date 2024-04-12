@@ -38,10 +38,14 @@ public class Configuration : IPluginConfiguration
     [UI("Character Name", Parent = nameof(enabled))]
     public string FakeNameText { get; set; } = Service.ClientState.LocalPlayer?.Name.TextValue ?? string.Empty;
 
+    [UI("Change FC Names", Parent = nameof(enabled))]
+    public bool FCNameReplace { get; set; } = true;
+
     public HashSet<string> CharacterNames = [];
     public HashSet<string> FriendList = [];
 
     public List<(string, string)> NameDict = [];
+    public List<(string, string)> FCNameDict = [];
     internal void SaveConfig()
     {
         Service.Interface.SavePluginConfig(this);

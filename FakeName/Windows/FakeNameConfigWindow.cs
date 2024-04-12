@@ -33,7 +33,7 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
         }
     }
 
-    [Description("Plaer Names")]
+    [Description("Player Names")]
     public class NameItem : ConfigWindowItem
     {
         public override bool IsSkip => !Service.Config.enabled;
@@ -45,7 +45,23 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
 
         public override bool GetIcon(out IDalamudTextureWrap texture)
         {
-            return ImageLoader.GetTexture(9, out texture);
+            return ImageLoader.GetTexture(43, out texture);
+        }
+    }
+
+    [Description("FC Names")]
+    public class FCNameItem : ConfigWindowItem
+    {
+        public override bool IsSkip => !Service.Config.enabled || !Service.Config.FCNameReplace;
+
+        public override void Draw(ConfigWindow window)
+        {
+            DrawList(Service.Config.FCNameDict);
+        }
+
+        public override bool GetIcon(out IDalamudTextureWrap texture)
+        {
+            return ImageLoader.GetTexture(8, out texture);
         }
     }
 

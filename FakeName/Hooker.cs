@@ -100,7 +100,7 @@ public class Hooker
 
             if (player != null)
             {
-                replacements.Add((GetNamesSimple(player.Name.TextValue), Service.Config.FakeNameText));
+                replacements.Add((GetNamesFull(player.Name.TextValue), Service.Config.FakeNameText));
             }
 
             foreach ((var key, var value) in Service.Config.NameDict)
@@ -158,20 +158,6 @@ public class Hooker
         }
     }
 
-    private static string[] GetNamesSimple(string name)
-    {
-        var names = name.Split(' ');
-        if (names.Length != 2) return [name];
-
-        //var first = names[0];
-
-        return
-        [
-            name,
-            //first,
-        ];
-    }
-
     private void AtkTextNodeSetTextDetour(IntPtr node, IntPtr text)
     {
         if (!Service.Config.Enabled)
@@ -197,6 +183,17 @@ public class Hooker
                 else if (Service.Config.AllPlayerReplace)
                 {
                     GetPtrFromSeString(GetChangedName(nameSe), namePtr);
+                }
+
+                if (Service.Config.FCNameReplace)
+                {
+                    nameSe = GetSeStringFromPtr(fcNamePtr).TextValue;
+                    foreach ((var key, var value) in Service.Config.FCNameDict)
+                    {
+                        if (key != nameSe) continue;
+                        GetPtrFromSeString(value, fcNamePtr);
+                        break;
+                    }
                 }
             }
         }

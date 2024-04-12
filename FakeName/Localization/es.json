@@ -13,6 +13,9 @@
   "XIVConfigUI.LocalString.CopyCommand": "Copy \"{0}\"",
   "XIVConfigUI.LocalString.SourceCode": "Click to see the source code!",
   "XIVConfigUI.LocalString.Localization": "Click to open the crowdin for modifying localization!",
-  "FakeName.Windows.FakeNameConfigWindow+NameItem": "Names",
-  "FakeName.ConfigurationName.FakeNameArray": "Character Name"
+  "FakeName.Windows.FakeNameConfigWindow+NameItem": "Player Names",
+  "FakeName.ConfigurationName.FakeNameArray": "Character Name",
+  "XIVConfigUI.LocalString.Search": "Search",
+  "FakeName.Windows.FakeNameConfigWindow+FCNameItem": "FC Names",
+  "FakeName.ConfigurationName.FCNameReplace": "Change FC Names"
 }

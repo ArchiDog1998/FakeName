@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/ArchiDog1998/FakeName/compare/v1.2.0...v1.2.1) (2024-05-11)
+
+
+### Bug Fixes
+
+* version fix ([3255cda](https://github.com/ArchiDog1998/FakeName/commit/3255cdab8c48468c49203b169e9ac298c6f9fdac))
+
 ## [1.2.0](https://github.com/ArchiDog1998/FakeName/compare/v1.1.2...v1.2.0) (2024-05-11)
 
 

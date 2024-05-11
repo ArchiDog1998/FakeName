@@ -2,7 +2,7 @@ using Dalamud.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using XIVConfigUI;
+using XIVConfigUI.Attributes;
 
 namespace FakeName;
 

@@ -9,6 +9,6 @@
 Change your name in game interface.
 
 ```
-https://raw.githubusercontent.com/ArchiDog1998/Dalamud_Plugins/main/pluginmaster.json
+https://raw.githubusercontent.com/ArchiDog1998/DalamudPlugins/main/pluginmaster.json
 ```
 

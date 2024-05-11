@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.0](https://github.com/ArchiDog1998/FakeName/compare/v1.1.2...v1.2.0) (2024-05-11)
+
+
+### Features
+
+* add fcName replace. ([9ec34f8](https://github.com/ArchiDog1998/FakeName/commit/9ec34f86c1e68307183b18e8f78ca339631b5a93)), closes [#33](https://github.com/ArchiDog1998/FakeName/issues/33)
+
+
+### Bug Fixes
+
+* links and the l10n. ([6745c86](https://github.com/ArchiDog1998/FakeName/commit/6745c8642139c6cc70065b75dcbbaaea82875baf))
+* ui fix. ([b5c7665](https://github.com/ArchiDog1998/FakeName/commit/b5c766553b15b25c1e0a03e341c28cf13c2bc45f))
+
 ## [1.1.2](https://github.com/ArchiDog1998/FakeName/compare/v1.1.1...v1.1.2) (2024-04-11)
 
 

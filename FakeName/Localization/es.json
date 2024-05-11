@@ -1,0 +1,21 @@
+{
+  "FakeName.DescriptionAboutCommand": "Abre una ventana de configuración para nombres falsos.",
+  "FakeName.Punchline": "Muestra un nombre falso en tu interfaz.",
+  "XIVConfigUI.LocalString.Searching": "Buscar...",
+  "FakeName.Windows.FakeNameConfigWindow+SettingItem": "Configuración",
+  "FakeName.Description": "Muestra un nombre falso en tu interfaz.\n\nSi molesta tu ventana de chat, ¡por favor usa chat2!",
+  "FakeName.ConfigurationName.enabled": "Activar",
+  "XIVConfigUI.LocalString.ResetToDefault": "Restablecer a valor por defecto.",
+  "FakeName.ConfigurationName.AllPlayerReplace": "Cambiar el nombre de todos los jugadores",
+  "FakeName.ConfigurationName.FakeNameText": "Nombre del personaje",
+  "FakeName.ConfigurationName.OnlyInStream": "Solo cambiar en Stream",
+  "XIVConfigUI.LocalString.ExecuteCommand": "Ejecutar {0}",
+  "XIVConfigUI.LocalString.CopyCommand": "Copiar {0}",
+  "XIVConfigUI.LocalString.SourceCode": "¡Haz clic para ver el código fuente!",
+  "XIVConfigUI.LocalString.Localization": "¡Haz clic para abrir el Crowdin para modificar la localización!",
+  "FakeName.Windows.FakeNameConfigWindow+NameItem": "Nombres de jugador",
+  "FakeName.ConfigurationName.FakeNameArray": "Nombre del personaje",
+  "XIVConfigUI.LocalString.Search": "Buscar",
+  "FakeName.Windows.FakeNameConfigWindow+FCNameItem": "Nombres FC",
+  "FakeName.ConfigurationName.FCNameReplace": "Cambiar nombres FC"
+}

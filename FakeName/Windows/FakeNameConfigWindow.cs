@@ -65,6 +65,16 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
         }
     }
 
+    [Description("ChangeLog")]
+    public class ChangeLog : ConfigWindowItem
+    {
+        public override bool GetIcon(out IDalamudTextureWrap texture)
+        {
+            return ImageLoader.GetTexture(80, out texture);
+        }
+        public override string Link => $"https://github.com/{XIVConfigUIMain.UserName}/{XIVConfigUIMain.RepoName}/blob/main/CHANGELOG.md";
+    }
+
     protected override string Kofi => "B0B0IN5DX";
     protected override string Crowdin => "fakename";
     protected override string DiscordServerInviteLink => "9D4E8eZW5g";

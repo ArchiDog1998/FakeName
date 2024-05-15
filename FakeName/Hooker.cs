@@ -244,6 +244,22 @@ public class Hooker
             Service.Log.Error(ex, "Something wrong with change name!");
             return seStringPtr;
         }
+
+        static bool ChangeSeString(SeString seString)
+        {
+            try
+            {
+                if (seString.Payloads.All(payload => payload.Type != PayloadType.RawText)) return false;
+
+                return Replacement.Any(pair => ReplacePlayerName(seString, pair.Item1, pair.Item2))
+                    || ReplacePlayerName(seString, Service.Config.CharacterNames, Service.Config.FakeNameText);
+            }
+            catch (Exception ex)
+            {
+                Service.Log.Error(ex, "Something wrong with replacement!");
+                return false;
+            }
+        }
     }
 
     public static void GetPtrFromSeString(SeString str, IntPtr ptr)
@@ -266,22 +282,6 @@ public class Hooker
         return SeString.Parse(bytes);
     }
 
-    public static bool ChangeSeString(SeString seString)
-    {
-        try
-        {
-            if (seString.Payloads.All(payload => payload.Type != PayloadType.RawText)) return false;
-
-            return Replacement.Any(pair => ReplacePlayerName(seString, pair.Item1, pair.Item2))
-                || ReplacePlayerName(seString, Service.Config.CharacterNames, Service.Config.FakeNameText);
-        }
-        catch (Exception ex)
-        {
-            Service.Log.Error(ex, "Something wrong with replacement!");
-            return false;
-        }
-    }
-
     public static string GetChangedName(string str)
     {
         if (string.IsNullOrEmpty(str)) return str;
@@ -299,32 +299,32 @@ public class Hooker
     {
         foreach (var name in names)
         {
-            if (ReplacePlayerName(text, name, replacement))
+            if (ReplacePlayerNamePrivate(text, name, replacement))
             {
                 return true;
             }
         }
         return false;
-    }
 
-    private static bool ReplacePlayerName(SeString text, string name, string replacement)
-    {
-        if (string.IsNullOrEmpty(name)) return false;
-
-        var result = false;
-        foreach (var payLoad in text.Payloads)
+        static bool ReplacePlayerNamePrivate(SeString text, string name, string replacement)
         {
-            if (payLoad is TextPayload load)
+            if (string.IsNullOrEmpty(name)) return false;
+
+            var result = false;
+            foreach (var payLoad in text.Payloads)
             {
-                if (string.IsNullOrEmpty(load.Text)) continue;
+                if (payLoad is TextPayload load)
+                {
+                    if (string.IsNullOrEmpty(load.Text)) continue;
 
-                var t = load.Text.Replace(name, replacement);
-                if (t == load.Text) continue;
+                    var t = load.Text.Replace(name, replacement);
+                    if (t == load.Text) continue;
 
-                load.Text = t;
-                result = true;
+                    load.Text = t;
+                    result = true;
+                }
             }
+            return result;
         }
-        return result;
     }
 }

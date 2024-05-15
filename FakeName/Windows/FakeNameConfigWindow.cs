@@ -56,6 +56,7 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
 
         public override void Draw(ConfigWindow window)
         {
+            ImGui.TextWrapped(UiString.FC.Local());
             DrawList(Service.Config.FCNameDict);
         }
 
@@ -98,13 +99,13 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
             ImGui.TableNextRow(ImGuiTableRowFlags.Headers);
 
             ImGui.TableNextColumn();
-            ImGui.TableHeader("Original Name");
+            ImGui.TableHeader(UiString.Origin.Local());
 
             ImGui.TableNextColumn();
-            ImGui.TableHeader("Replaced Name");
+            ImGui.TableHeader(UiString.Replace.Local());
 
             ImGui.TableNextColumn();
-            ImGui.TableHeader("Delete");
+            ImGui.TableHeader(UiString.Delete.Local());
 
             var index = 0;
 

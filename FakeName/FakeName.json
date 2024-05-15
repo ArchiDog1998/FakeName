@@ -1,24 +1,25 @@
 {
-  "Author": "ArchiTed, matrix",
-  "Name": "Fake Name",
-  "InternalName": "FakeName",
-  "AssemblyVersion": "1.1.1.0",
-  "Description": "Show a fake name on your game ui.\n\nIf it messed up your chat box, please use chat2!",
-  "ApplicableVersion": "any",
-  "RepoUrl": "https://github.com/ArchiDog1998/FakeName",
-  "Tags": [
-    "name",
-    "ui"
-  ],
-  "CategoryTags": [
-    "ui"
-  ],
-  "DalamudApiLevel": 9,
-  "LoadRequiredState": 0,
-  "LoadSync": false,
-  "CanUnloadAsync": false,
-  "LoadPriority": 0,
-  "IconUrl": "https://raw.githubusercontent.com/ArchiDog1998/FakeName/main/icon.png",
-  "Punchline": "Show a fake name on your game ui.",
-  "AcceptsFeedback": true
+    "Author": "ArchiTed",
+    "Name": "Fake Name",
+    "InternalName": "FakeName",
+    "AssemblyVersion": "1.1.1.0",
+    "Description":
+    "Fake name is a Dalamud plugin that visually changes the player's name to whatever someone wants in order to provide anonymity while streaming, recording videos or taking pictures.\nIt's really easy to use and set up, /fakename opens up the settings window\n\nIf it messed up your chat box, please use chat2!",
+    "ApplicableVersion": "any",
+    "RepoUrl": "https://github.com/ArchiDog1998/FakeName",
+    "Tags": [
+        "name",
+        "ui"
+    ],
+    "CategoryTags": [
+        "ui"
+    ],
+    "DalamudApiLevel": 9,
+    "LoadRequiredState": 0,
+    "LoadSync": false,
+    "CanUnloadAsync": false,
+    "LoadPriority": 0,
+    "IconUrl": "https://raw.githubusercontent.com/ArchiDog1998/FakeName/main/icon.png",
+    "Punchline": "Show a fake name on your game ui.",
+    "AcceptsFeedback": true
 }

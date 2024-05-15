@@ -41,6 +41,9 @@ public class Configuration : IPluginConfiguration
     [UI("Change FC Names", Parent = nameof(enabled))]
     public bool FCNameReplace { get; set; } = true;
 
+    [UI("Show the donate link.")]
+    public bool ShowDonate { get; set; } = true;
+
     public HashSet<string> CharacterNames = [];
     public HashSet<string> FriendList = [];
 

@@ -77,8 +77,8 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
 
     protected override string Kofi => "B0B0IN5DX";
     protected override string Crowdin => "fakename";
-    protected override string DiscordServerInviteLink => "9D4E8eZW5g";
-    protected override string DiscordServerID => "1228953752585637908";
+
+    protected override bool ShowDonate => Service.Config.ShowDonate;
 
     public override SearchableCollection Collection { get; } = new(Service.Config, new Config());
 

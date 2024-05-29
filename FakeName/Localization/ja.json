@@ -5,7 +5,7 @@
   "FakeName.Windows.FakeNameConfigWindow+SettingItem": "Setting",
   "FakeName.Windows.FakeNameConfigWindow+NameItem": "Player Names",
   "FakeName.Windows.FakeNameConfigWindow+FCNameItem": "FC Names",
-  "FakeName.Description": "Show a fake name on your game ui.\n\nIf it messed up your chat box, please use chat2!",
+  "FakeName.Description": "Fake name is a Dalamud plugin that visually changes the player's name to whatever someone wants in order to provide anonymity while streaming, recording videos or taking pictures.\nIt's really easy to use and set up, /fakename opens up the settings window\n\nIf it messed up your chat box, please use chat2!",
   "XIVConfigUI.LocalString.SourceCode": "Click to see the source code!",
   "XIVConfigUI.LocalString.Localization": "Click to open the crowdin for modifying localization!",
   "FakeName.ConfigurationName.enabled": "Enable",
@@ -23,5 +23,11 @@
   "XIVConfigUI.Attributes.ConfigUnitType.Degree": "Angle Unit, in degrees.",
   "XIVConfigUI.Attributes.ConfigUnitType.Yalms": "Distance Unit, in yalms.",
   "XIVConfigUI.Attributes.ConfigUnitType.Percent": "Ratio Unit, as percentage.",
-  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels."
+  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels.",
+  "FakeName.ConfigurationName.ShowDonate": "Show the donate link.",
+  "FakeName.Windows.FakeNameConfigWindow+ChangeLog": "ChangeLog",
+  "FakeName.UiString.FC": "The FC replacement only effect on the nameplate.",
+  "FakeName.UiString.Origin": "Original Name",
+  "FakeName.UiString.Replace": "Replaced Name",
+  "FakeName.UiString.Delete": "Delete"
 }

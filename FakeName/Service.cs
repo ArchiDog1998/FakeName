@@ -9,7 +9,7 @@ internal class Service
     internal static Configuration Config { get; set; } = null!;
 
     [PluginService]
-    internal static DalamudPluginInterface Interface { get; private set; } = null!;
+    internal static IDalamudPluginInterface Interface { get; private set; } = null!;
 
     [PluginService]
     internal static IClientState ClientState { get; private set; } = null!;

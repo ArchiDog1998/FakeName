@@ -1,5 +1,6 @@
 using Dalamud.Interface;
 using Dalamud.Interface.Internal;
+using Dalamud.Interface.Textures.TextureWraps;
 using ImGuiNET;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -82,6 +83,17 @@ internal class FakeNameConfigWindow() : ConfigWindow(typeof(FakeNameConfigWindow
     protected override bool ShowDonate => Service.Config.ShowDonate;
 
     public override SearchableCollection Collection { get; } = new(Service.Config, new Config());
+
+    protected override ConfigWindowItem[] GetItems()
+    {
+        return 
+        [
+            new SettingItem(),
+            new NameItem(),
+            new FCNameItem(),
+            new ChangeLog(),
+        ];
+    }
 
     private static void DrawList(List<(string, string)> data)
     {

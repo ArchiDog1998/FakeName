@@ -11,7 +11,7 @@ public class Plugin : IDalamudPlugin
 
     internal WindowManager WindowManager { get; }
 
-    public Plugin(DalamudPluginInterface pluginInterface)
+    public Plugin(IDalamudPluginInterface pluginInterface)
     {
         pluginInterface.Create<Service>();
         Service.Config = Service.Interface.GetPluginConfig() as Configuration ?? new Configuration();

@@ -3,7 +3,6 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
-using Dalamud.Memory;
 using Dalamud.Plugin.Services;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
@@ -13,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace FakeName;
 
@@ -21,7 +21,7 @@ public class Hooker
     private delegate void AtkTextNodeSetTextDelegate(IntPtr node, IntPtr text);
 
     /// <summary>
-    /// https://github.com/aers/FFXIVClientStructs/blob/main/FFXIVClientStructs/FFXIV/Component/GUI/AtkTextNode.cs#L79
+    /// https://github.com/aers/FFXIVClientStructs/blob/main/FFXIVClientStructs/FFXIV/Component/GUI/AtkTextNode.cs#L48
     /// </summary>
     [Signature("E8 ?? ?? ?? ?? 8D 4E 32", DetourName = nameof(AtkTextNodeSetTextDetour))]
     private Hook<AtkTextNodeSetTextDelegate>? AtkTextNodeSetTextHook { get; init; }
@@ -112,7 +112,7 @@ public class Hooker
 
             foreach (var obj in Service.ObjectTable)
             {
-                if (obj is not PlayerCharacter member) continue;
+                if (obj is not IPlayerCharacter member) continue;
                 var memberName = member.Name.TextValue;
                 if (memberName == player?.Name.TextValue) continue;
 
@@ -121,9 +121,9 @@ public class Hooker
 
             if (Service.Condition[ConditionFlag.ParticipatingInCrossWorldPartyOrAlliance])
             {
-                foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroupArraySpan[0].GroupMembersSpan)
+                foreach (var x in InfoProxyCrossRealm.Instance()->CrossRealmGroups[0].GroupMembers)
                 {
-                    var name = MemoryHelper.ReadStringNullTerminated((IntPtr)x.Name);
+                    var name = Encoding.UTF8.GetString(x.Name);
                     replacements.Add((new string[] { name }, GetChangedName(name)));
                 }
             }

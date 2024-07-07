@@ -2,7 +2,6 @@
     "Author": "ArchiTed",
     "Name": "Fake Name",
     "InternalName": "FakeName",
-    "AssemblyVersion": "1.1.1.0",
     "Description":
     "Fake name is a Dalamud plugin that visually changes the player's name to whatever someone wants in order to provide anonymity while streaming, recording videos or taking pictures.\nIt's really easy to use and set up, /fakename opens up the settings window\n\nIf it messed up your chat box, please use chat2!",
     "ApplicableVersion": "any",

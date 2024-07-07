@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.1](https://github.com/ArchiDog1998/FakeName/compare/v1.2.0...v1.2.1) (2024-07-07)
+
+
+### Bug Fixes
+
+* add changeLog link. ([453c9ec](https://github.com/ArchiDog1998/FakeName/commit/453c9ec71772fcc2da8878da5e38c0fe216bca7b))
+* add show donate option. ([fd204ee](https://github.com/ArchiDog1998/FakeName/commit/fd204eeb0ce5de2b495a7759ece8d553933d53c7))
+* api 10. ([aee2967](https://github.com/ArchiDog1998/FakeName/commit/aee29670fd77e0207d6badd0995ab9eb730d7b7d))
+* make it work! ([18fb962](https://github.com/ArchiDog1998/FakeName/commit/18fb9625c8595254addd2d84c6641624c0aab6a6))
+* some naming things. ([5e105bb](https://github.com/ArchiDog1998/FakeName/commit/5e105bb7b349fb24e21293042192a30bf7deb0ae))
+* version fix ([3255cda](https://github.com/ArchiDog1998/FakeName/commit/3255cdab8c48468c49203b169e9ac298c6f9fdac))
+
 ## [1.2.0](https://github.com/ArchiDog1998/FakeName/compare/v1.1.2...v1.2.0) (2024-05-11)
 
 

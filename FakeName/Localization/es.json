@@ -23,5 +23,12 @@
   "XIVConfigUI.Attributes.ConfigUnitType.Degree": "Angle Unit, in degrees.",
   "XIVConfigUI.Attributes.ConfigUnitType.Yalms": "Distance Unit, in yalms.",
   "XIVConfigUI.Attributes.ConfigUnitType.Percent": "Ratio Unit, as percentage.",
-  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels."
+  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels.",
+  "XIVConfigUI.LocalString.Remove": "Remove",
+  "XIVConfigUI.LocalString.MoveUp": "Move Up",
+  "XIVConfigUI.LocalString.MoveDown": "Move Down",
+  "XIVConfigUI.LocalString.CopyToClipboard": "Copy to Clipboard",
+  "XIVConfigUI.LocalString.FromClipboard": "From Clipboard",
+  "XIVConfigUI.LocalString.List": "List",
+  "XIVConfigUI.LocalString.Nothing": "No items in Combo"
 }

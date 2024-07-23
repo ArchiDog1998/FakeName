@@ -1,5 +1,6 @@
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Objects.SubKinds;
+using Dalamud.Game.Gui.NamePlate;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Hooking;
@@ -7,10 +8,12 @@ using Dalamud.Plugin.Services;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Info;
+using Svg;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -26,15 +29,6 @@ public class Hooker
     [Signature("E8 ?? ?? ?? ?? 8D 4E 32", DetourName = nameof(AtkTextNodeSetTextDetour))]
     private Hook<AtkTextNodeSetTextDelegate>? AtkTextNodeSetTextHook { get; init; }
 
-    private delegate void SetNamePlateDelegate(IntPtr addon, bool isPrefixTitle, 
-        bool displayTitle, IntPtr titlePtr, IntPtr namePtr, IntPtr fcNamePtr, IntPtr prefix, int iconId);
-
-    /// <summary>
-    /// https://github.com/shdwp/xivPartyIcons/blob/main/PartyIcons/Api/PluginAddressResolver.cs#L40
-    /// </summary>
-    [Signature("E8 ?? ?? ?? ?? E9 ?? ?? ?? ?? 48 8B 5C 24 ?? 45 38 BE", DetourName = nameof(SetNamePlateDetour))]
-    private Hook<SetNamePlateDelegate>? SetNamePlateHook { get; init; }
-
     public static List<(string[], string)> Replacement { get; private set; } = [];
 
     internal unsafe Hooker()
@@ -42,16 +36,67 @@ public class Hooker
         Service.Hook.InitializeFromAttributes(this);
 
         AtkTextNodeSetTextHook?.Enable();
-        SetNamePlateHook?.Enable();
+
+        Service.NamePlate.OnNamePlateUpdate += NamePlate_OnNamePlateUpdate;
 
         Service.Framework.Update += Framework_Update;
         Service.ClientState.Login += ClientState_Login;
     }
 
+    private void NamePlate_OnNamePlateUpdate(INamePlateUpdateContext context, IReadOnlyList<INamePlateUpdateHandler> handlers)
+    {
+        foreach (var handler in handlers)
+        {
+            switch (handler.NamePlateKind)
+            {
+                case NamePlateKind.PlayerCharacter:
+                    var str = handler.Name?.TextValue;
+
+                    if (!string.IsNullOrEmpty(str))
+                    {
+                        handler.Name = ReplaceNameplate(str);
+                    }
+
+                    var nameSe = handler.FreeCompanyTag.TextValue;
+                    foreach ((var key, var value) in Service.Config.FCNameDict)
+                    {
+                        if (key != nameSe) continue;
+                        handler.FreeCompanyTag = value;
+                        break;
+                    }
+                    break;
+
+                case NamePlateKind.EventNpcCompanion:
+                    str = handler.Title.ToString();
+                    var start = str[0];
+                    var end = str[^1];
+                    handler.Title = start + ReplaceNameplate(str[1..^1]) + end;
+                    break;
+            }
+        }
+    }
+
+    private static string ReplaceNameplate(string str)
+    {
+        if (Service.ClientState.LocalPlayer != null && GetNamesFull(Service.ClientState.LocalPlayer.Name.TextValue).Contains(str))
+        {
+            return Service.Config.FakeNameText;
+        }
+        else if (Service.Config.AllPlayerReplace)
+        {
+            return GetChangedName(str);
+        }
+        else
+        {
+            return str;
+        }
+    }
+
     public unsafe void Dispose()
     {
         AtkTextNodeSetTextHook?.Dispose();
-        SetNamePlateHook?.Dispose();
+        Service.NamePlate.OnNamePlateUpdate -= NamePlate_OnNamePlateUpdate;
+
         Service.Framework.Update -= Framework_Update;
         Service.ClientState.Login -= ClientState_Login;
     }
@@ -202,8 +247,8 @@ public class Hooker
             Service.Log.Error(ex, "Failed to change name plate");
         }
 
-        SetNamePlateHook?.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
-            titlePtr, namePtr, fcNamePtr, prefix, iconId);
+        //SetNamePlateHook?.Original(namePlateObjectPtr, isPrefixTitle, displayTitle,
+        //    titlePtr, namePtr, fcNamePtr, prefix, iconId);
     }
 
     private static string[] GetNamesFull(string name)

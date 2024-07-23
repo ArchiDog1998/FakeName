@@ -31,4 +31,7 @@ internal class Service
 
     [PluginService]
     public static IPluginLog Log { get; private set; } = null!;
+
+    [PluginService]
+    public static INamePlateGui NamePlate { get; private set; } = null!;
 }

@@ -8,12 +8,10 @@ using Dalamud.Plugin.Services;
 using Dalamud.Utility.Signatures;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using FFXIVClientStructs.FFXIV.Client.UI.Info;
-using Svg;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -37,14 +35,16 @@ public class Hooker
 
         AtkTextNodeSetTextHook?.Enable();
 
-        Service.NamePlate.OnNamePlateUpdate += NamePlate_OnNamePlateUpdate;
+        Service.NamePlate.OnDataUpdate += NamePlate_OnDataUpdate;
 
         Service.Framework.Update += Framework_Update;
         Service.ClientState.Login += ClientState_Login;
     }
 
-    private void NamePlate_OnNamePlateUpdate(INamePlateUpdateContext context, IReadOnlyList<INamePlateUpdateHandler> handlers)
+    private void NamePlate_OnDataUpdate(INamePlateUpdateContext context, IReadOnlyList<INamePlateUpdateHandler> handlers)
     {
+        if (!Service.Config.Enabled) return;
+
         foreach (var handler in handlers)
         {
             switch (handler.NamePlateKind)
@@ -67,7 +67,10 @@ public class Hooker
                     break;
 
                 case NamePlateKind.EventNpcCompanion:
+                    if (handler.GameObject?.ObjectKind is not Dalamud.Game.ClientState.Objects.Enums.ObjectKind.Companion) break;
                     str = handler.Title.ToString();
+                    if (string.IsNullOrEmpty(str)) break;
+                    if (str.Length < 3) break;
                     var start = str[0];
                     var end = str[^1];
                     handler.Title = start + ReplaceNameplate(str[1..^1]) + end;
@@ -95,7 +98,7 @@ public class Hooker
     public unsafe void Dispose()
     {
         AtkTextNodeSetTextHook?.Dispose();
-        Service.NamePlate.OnNamePlateUpdate -= NamePlate_OnNamePlateUpdate;
+        Service.NamePlate.OnDataUpdate -= NamePlate_OnDataUpdate;
 
         Service.Framework.Update -= Framework_Update;
         Service.ClientState.Login -= ClientState_Login;

@@ -29,5 +29,12 @@
   "XIVConfigUI.Attributes.ConfigUnitType.Degree": "Angle Unit, in degrees.",
   "XIVConfigUI.Attributes.ConfigUnitType.Yalms": "Distance Unit, in yalms.",
   "XIVConfigUI.Attributes.ConfigUnitType.Percent": "Ratio Unit, as percentage.",
-  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels."
+  "XIVConfigUI.Attributes.ConfigUnitType.Pixels": "Display Unit, in pixels.",
+  "XIVConfigUI.LocalString.None": "None",
+  "FakeName.Punchline": "Show a fake name on your game ui.",
+  "FakeName.Windows.FakeNameConfigWindow+SettingItem": "Setting",
+  "FakeName.Windows.FakeNameConfigWindow+NameItem": "Player Names",
+  "FakeName.Windows.FakeNameConfigWindow+FCNameItem": "FC Names",
+  "FakeName.Windows.FakeNameConfigWindow+ChangeLog": "ChangeLog",
+  "FakeName.Description": "Fake name is a Dalamud plugin that visually changes the player's name to whatever someone wants in order to provide anonymity while streaming, recording videos or taking pictures.\nIt's really easy to use and set up, /fakename opens up the settings window\n\nIf it messed up your chat box, please use chat2!"
 }

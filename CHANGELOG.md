@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.2](https://github.com/ArchiDog1998/FakeName/compare/v1.2.1...v1.2.2) (2024-07-25)
+
+
+### Bug Fixes
+
+* better nameplate. but not perfect. ([2dd43cd](https://github.com/ArchiDog1998/FakeName/commit/2dd43cd1a03936c2e4a0697bba08dfc5d07a1fa7))
+* hook fixed. ([54c3ea9](https://github.com/ArchiDog1998/FakeName/commit/54c3ea95a028d7a458a89eb72157baf2afd225e1))
+
 ## [1.2.1](https://github.com/ArchiDog1998/FakeName/compare/v1.2.0...v1.2.1) (2024-07-07)
 
 
